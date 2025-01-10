@@ -1,0 +1,7 @@
+{
+      "objectscript.conn": {
+            "server": "localdocker",
+            "ns": "STAGINGAREA",
+            "active": true
+      }
+}

@@ -3,11 +3,13 @@ services:
         build:
             context: ./  # 这里把当前路径的上一级加到上下文环境中
             dockerfile: ./image-iris/Dockerfile  #指定dockerfile
+        volumes:
+            - ./data:/usr/src/data
         environment:
             IRIS_USERNAME: superuser
             IRIS_PASSWORD: SYS
         hostname: 2024demo
-        container_name: fhirvalidation
+        container_name: datafabricdemo
         ports:
             - 1980:1972 
             - 52880:52773

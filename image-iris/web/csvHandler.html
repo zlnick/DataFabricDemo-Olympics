@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV Analyzer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="file" id="csvFileInput">
+  <button onclick="analyzeCSV()">分析CSV文件</button>
+  <div id="result"></div>
+  <script>
+    function analyzeCSV() {
+      const fileInput = document.getElementById('csvFileInput');
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const contents = e.target.result;
+          const lines = contents.split('\n');
+          const headerLine = lines[0];
+          const headers = headerLine.split(',');
+          const jsonArray = [];
+          headers.forEach(header => {
+            const nameValue = header.trim();
+            // 只有当name值不为空字符串时才添加到jsonArray中
+            if (nameValue!== "") {
+              const data = {
+                name: nameValue,
+                type: "string"
+              };
+              jsonArray.push(data);
+            }
+          });
+          const resultDiv = document.getElementById('result');
+          resultDiv.innerHTML = JSON.stringify(jsonArray, null, 2);
+        };
+        reader.readAsText(file);
+      } else {
+        alert('请选择一个CSV文件');
+      }
+    }
+  </script>
+</body>
+
+</html>
